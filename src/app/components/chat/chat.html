@@ -1,0 +1,99 @@
+<div class="chat-container">
+  <div class="chat-header">
+    <h2>WEB 3 Assistant</h2>
+
+  </div>
+
+  <div class="messages-container" #messagesContainer>
+    <div class="messages-wrapper">
+      <ng-container *ngIf="currentSession$ | async as session; else emptyState">
+        <div *ngFor="let message of session.messages"
+           class="message"
+           [class.user-message]="message.role === 'user'"
+           [class.assistant-message]="message.role === 'assistant'">
+        <div class="message-avatar">
+          <svg *ngIf="message.role === 'user'" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          <svg *ngIf="message.role === 'assistant'" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="message-content">
+          <div class="message-header">
+            <span class="message-role">{{ message.role === 'user' ? 'You' : 'AI Assistant' }}</span>
+            <span class="message-time">{{ message.timestamp | date:'short' }}</span>
+          </div>
+          <div class="message-text" [innerHTML]="formatMessageContent(message.content)"></div>
+        </div>
+      </div>
+
+      <div *ngIf="isLoading" class="message assistant-message">
+        <div class="message-avatar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="message-content">
+          <div class="typing-indicator">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    </div>
+
+    <ng-template #emptyState>
+      <div class="empty-state">
+        <div class="empty-icon">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <h3>Welcome to AI Chat</h3>
+        <p>Start a conversation by typing a message below</p>
+        <div class="suggestions">
+          <button class="suggestion-chip" (click)="messageText = 'Tell me a fun fact'; sendMessage()">
+            Tell me a fun fact
+          </button>
+          <button class="suggestion-chip" (click)="messageText = 'Help me write an email'; sendMessage()">
+            Help me write an email
+          </button>
+          <button class="suggestion-chip" (click)="messageText = 'Explain quantum computing'; sendMessage()">
+            Explain quantum computing
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+
+  <div class="input-container">
+    <div class="input-wrapper">
+      <textarea
+        [(ngModel)]="messageText"
+        (keypress)="handleKeyPress($event)"
+        placeholder="Type your message..."
+        rows="1"
+        [disabled]="isLoading"></textarea>
+      <button
+        class="send-btn"
+        (click)="sendMessage()"
+        [disabled]="!messageText.trim() || isLoading"
+        title="Send message"
+        aria-label="Send message">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </div>
+    <p class="input-hint">Press Enter to send, Shift + Enter for new line</p>
+  </div>
+</div>
+*/

@@ -1,0 +1,50 @@
+<div class="sidebar">
+  <div class="sidebar-header">
+    <button class="new-chat-btn" (click)="createNewChat()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M5 12h14"/>
+      </svg>
+      New Chat
+    </button>
+  </div>
+
+  <div class="chat-list">
+    <div class="chat-list-section">
+      <h3 class="section-title">Recent Chats</h3>
+      <div *ngFor="let session of (chatSessions$ | async)"
+           class="chat-item"
+           [class.active]="(currentSession$ | async)?.id === session.id"
+           (click)="selectChat(session.id)">
+        <div class="chat-item-content">
+          <div class="chat-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <div class="chat-details">
+            <div class="chat-title">{{ session.title }}</div>
+            <div class="chat-time">{{ formatDate(session.updatedAt) }}</div>
+          </div>
+        </div>
+        <button class="delete-btn" (click)="deleteChat($event, session.id)" title="Delete chat" aria-label="Delete chat">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="user-info">
+      <div class="user-avatar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+      </div>
+      <span class="user-name">User</span>
+    </div>
+  </div>
+</div>
+

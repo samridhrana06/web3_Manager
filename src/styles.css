@@ -1,0 +1,31 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Global input and textarea styles */
+input,
+textarea {
+    background-color: rgba(26, 31, 53, 0.95) !important;
+    color: #ffffff;
+    border: none;
+    font-family: inherit;
+}
+
+/* Remove default white background from autofill */
+input:-webkit-autofill,
+textarea:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px rgba(26, 31, 53, 0.95) inset !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Remove default white background from textarea */
+textarea {
+    background: rgba(26, 31, 53, 0.95) !important;
+    -webkit-appearance: none;
+    appearance: none;
+}
